@@ -4,7 +4,7 @@ import { ApolloServer } from "apollo-server-express";
 import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import { verify } from "jsonwebtoken";
-import { Express } from "./types";
+import { Express, MyContext } from "./types";
 import { AuthResolver } from "./resolvers/auth";
 import { typeDefs } from "./typeDefs";
 import { HelloResolver } from "./resolvers/hello";
@@ -13,7 +13,7 @@ const main = async () => {
   const context: any = {};
   context.typeDefs = typeDefs;
   context.resolvers = [AuthResolver, HelloResolver];
-  context.context = ({ req, res }: any) => ({ req, res });
+  context.context = ({ req, res }: MyContext) => ({ req, res });
 
   const apolloServer = new ApolloServer(context);
 
