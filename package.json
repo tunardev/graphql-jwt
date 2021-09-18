@@ -20,7 +20,6 @@
     "typescript": "3.4.5"
   },
   "dependencies": {
-    "@types/cookie-parser": "^1.4.2",
     "apollo-server-express": "^3.3.0",
     "argon2": "^0.28.2",
     "cookie-parser": "^1.4.5",
