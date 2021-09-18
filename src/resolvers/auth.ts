@@ -35,14 +35,19 @@ export const AuthResolver = {
         email,
         password: hashedPassword,
         username,
-      }).save();
+      });
 
       const refreshToken = jwt.sign(
         { userId: user.id },
         process.env.REFRESH_TOKEN_SECRET as string
       );
       const accessToken = jwt.sign(
-        user,
+        {
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          userId: user.id,
+        },
         process.env.ACCESS_TOKEN_SECRET as string,
         {
           expiresIn: "24h",
@@ -80,6 +85,11 @@ export const AuthResolver = {
       res.cookie("refresh-token", refreshToken);
       res.cookie("access-token", accessToken);
 
+      return true;
+    },
+    logout(_, __, { res }: MyContext): boolean {
+      res.cookie("refresh-token", "");
+      res.cookie("access-token", "");
       return true;
     },
   },
