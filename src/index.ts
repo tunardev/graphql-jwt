@@ -3,7 +3,7 @@ import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 import * as express from "express";
 import * as cookieParser from "cookie-parser";
-import { verify } from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import { Express, MyContext } from "./types";
 import { AuthResolver } from "./resolvers/auth";
 import { typeDefs } from "./typeDefs";
@@ -26,7 +26,7 @@ const main = async () => {
   app.use((req, _, next) => {
     const accessToken = req.cookies["access-token"];
     try {
-      const data = verify(
+      const data = jwt.verify(
         accessToken,
         process.env.ACCESS_TOKEN_SECRET as string
       ) as any;
